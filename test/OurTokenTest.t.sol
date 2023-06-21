@@ -33,9 +33,12 @@ contract ourTokenTest is Test {
         vm.prank(bob);
         ourToken.approve(alice, initialAllowance);
 
-        uint256 transderAmount = 500;
+        uint256 transferAmount = 500;
 
         vm.prank(alice);
-        ourToken.transferFrom(bob, alice, transderAmount);
+        ourToken.transferFrom(bob, alice, transferAmount);
+
+        assertEq(ourToken.balanceOf(alice), transferAmount);
+        assertEq(ourToken.balanceOf(bob), STARTING_BALANCE - transferAmount);
     }
 }
