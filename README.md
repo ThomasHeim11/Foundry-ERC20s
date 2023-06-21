@@ -1,4 +1,6 @@
 # Foundry ERC20
+![forge](https://github.com/ThomasHeim11/Foundary-Fund-Me/assets/106417552/a6df2fc9-9e64-4e41-b3e0-60139a99d923)
+
 Foundry ERC20 is a Solidity project that provides a template for creating and deploying ERC20 tokens using the Foundry framework. It includes instructions for setting up the project, deploying the token, running tests, and interacting with the deployed contracts through scripts.
 
 - [Foundry ERC20](#foundry-erc20)
