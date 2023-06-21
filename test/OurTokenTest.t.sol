@@ -1,6 +1,6 @@
+// tests/OurTokenTest.sol
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.19;
+pragma solidity 0.8.19;
 
 import {DeployOurToken} from "../script/DeployOurToken.s.sol";
 import {OurToken} from "../src/OurToken.sol";
@@ -11,6 +11,10 @@ interface MintableToken {
     function mint(address, uint256) external;
 }
 
+/**
+ * @title OurTokenTest
+ * @dev A test suite for the OurToken ERC20 token.
+ */
 contract OurTokenTest is StdCheats, Test {
     uint256 BOB_STARTING_AMOUNT = 100 ether;
 
@@ -20,6 +24,10 @@ contract OurTokenTest is StdCheats, Test {
     address bob;
     address alice;
 
+    /**
+     * @dev Sets up the test environment by deploying the OurToken contract and
+     * transferring tokens to Bob.
+     */
     function setUp() public {
         deployer = new DeployOurToken();
         ourToken = deployer.run();
@@ -32,15 +40,24 @@ contract OurTokenTest is StdCheats, Test {
         ourToken.transfer(bob, BOB_STARTING_AMOUNT);
     }
 
+    /**
+     * @dev Tests that the initial supply of tokens is correct.
+     */
     function testInitialSupply() public {
         assertEq(ourToken.totalSupply(), deployer.INITIAL_SUPPLY());
     }
 
+    /**
+     * @dev Tests that users cannot mint tokens.
+     */
     function testUsersCantMint() public {
         vm.expectRevert();
         MintableToken(address(ourToken)).mint(address(this), 1);
     }
 
+    /**
+     * @dev Tests that allowances work correctly.
+     */
     function testAllowances() public {
         uint256 initialAllowance = 1000;
 
@@ -54,6 +71,4 @@ contract OurTokenTest is StdCheats, Test {
         assertEq(ourToken.balanceOf(alice), transferAmount);
         assertEq(ourToken.balanceOf(bob), BOB_STARTING_AMOUNT - transferAmount);
     }
-
-    // can you get the coverage up?
 }
